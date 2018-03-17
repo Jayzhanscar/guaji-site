@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="这是一个介绍学习机器学习的网站">
+    <meta name="author" content="詹灵杰毕业设计">
+    <title>呱叽-记录你的机器学习</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/lunbo/swiper.min.css">
+    <style>
+        @font-face
+        {
+             font-family: myFirstFont;
+             src: url(/static/font/Niconne-Regular.ttf);
+         }
+        .home-text{font-family: myFirstFont;}
+        body{
+            background: #eee none repeat scroll 0 0;
+             margin: 0;
+            padding: 0;
+            overflow-y: scroll;
+            width: 100%;
+        }
+        a{
+            color: white;
+        }
+        a:hover{
+            text-decoration:none;
+            color: white;
+        }
+         #navlist {
+            width: 120px;
+             height: 170px;
+            background: #ea6f5a;
+            position: absolute;
+             border-radius: 10px;
+             right: 90px;
+             top: 60px;
+             display: none;
+        }
+         #navlist>ul>li{
+             margin-left: -40px;
+             margin-top: 10px;
+              list-style: none;
+             text-align: center;
+             padding:5px;
+         }
+        #navlist>ul>li>a{
+            color: #fff;
+            text-decoration: none;
+        }
+        .square{
+            width: 0;
+            height: 0;
+            border-width: 0 10px 20px 15px;
+            border-color: #ea6f5a transparent;
+            border-style: solid;
+            position: absolute;
+            right: 140px;
+            top: 50px;
+            display: none;
+        }
+        .lunbo-left{height: 275px;width: 20% ;margin-top: 80px;margin-left: 15%;color: white;}
+        .lunbo-right{ width: 43%;border-radius: 10px;height: 275px;margin-top: 80px;margin-left: 4%; overflow: hidden;}
+        .nav-left{background-color: coral;width: 100%;height: 45px;margin-top: 5px;margin-left: 10%;border-radius: 5px;line-height: 45px;font-size: 20px;text-align: center;transition: width 0.5s, height 0.5s;letter-spacing:18px;
+          -webkit-transition: width  0.5s,height 0.5s;}
+        .nav-left:hover{width: 90%;height: 50px; line-height: 50px;text-align: center;cursor:pointer}
+           body,ul,span,li,p{padding:0;margin:0;}
+        .wrapper{
+            float:left;
+            width:785px;
+            height:413px;
+        }
+        #focus{width:785px;height:413px;overflow:hidden;position:relative;}
+        #focus ul{height:413px;position:absolute;}
+        #focus ul li{float:left;width:785px;height:413px;overflow:hidden;position:relative;background:#000;}
+        #focus ul li div{position:absolute;overflow:hidden;}
+        #focus .btnBg{position:absolute;width:785px;height:40px;left:0;bottom:0;background:#000;}
+        #focus .title{position:absolute;width:545px;height:40px;left:0;bottom:0;text-align:left;line-height: 40px;padding-left: 20px;color:#fff; cursor:pointer;}
+        #focus .btn{position:absolute;width:240px;height:10px;right:30px;bottom:10px;text-align:right;}
+        #focus .btn span{display:inline-block;_display:inline;_zoom:1;width:43px;height:2px;_font-size:0;margin-left:5px;cursor:pointer;background:#fff;}
+        #focus .btn span.on{background:#fff;}
+        #focus .pre{left:0;}
+        #focus .next{right:0;background-position:right top;}
+        .catlog-item3 a, .catlog-item4 a{
+            display: block;width:167px;height:139px;
+            text-align: center;
+            line-height: 139px;
+        }
+        .catlog-item1 a,.catlog-item5 a{
+            background: #ea6f5a;
+        }
+        .catlog-item1 a:hover,.catlog-item5 a:hover{
+
+        }
+        .catlog-item2 a,.catlog-item6 a{
+            background: #73d842;
+        }
+        .catlog-item2 a:hover,.catlog-item6 a:hover{
+            background: #3fe967;
+        }
+        .catlog-item3 a{
+            background: #3fe967;
+        }
+        .catlog-item3 a:hover{
+            background: #73d842;
+        }
+        .catlog-item4 a{
+            background: #ea6f5a;
+        }
+        .catlog-item4 a:hover{
+            background: #ea6f5a;
+        }
+        .font26Bai a{
+            font-family: "微软雅黑";
+            font-size: 24px;
+            color:#fff;
+            font-weight: bold;
+            text-decoration: none;
+        }
+         input::-webkit-input-placeholder{text-align: center;}
+         input {outline:none;}
+        .biaoqian{width: 80px;  border-top-right-radius:5px;border-bottom-right-radius:5px; background-color: whitesmoke;text-align: center;line-height: 35px;height: 35px;border-left: 0}
+        .sousuo{height:40px;background-color: #eee;border: 0;border-radius: 30px;margin-left: 12%;width: 20%;margin-top: 7px;position: absolute;}
+        .xie{display: flex;background-color: #ea6f5a;width: 8%;float: right; height: 40px;position: absolute;text-align:center;right: 18%;border-radius: 30px;margin-top: 7px;}
+         .wrap{ width:650px; margin:30px auto; overflow:hidden;}
+        .list{ width:650px; padding:0 0 20px 0; margin:0 0 20px 0; border-bottom:1px  solid #f0f0f0;}
+        .list .date{ float:left;  margin:0 20px 0 0; padding:2px 0 0;  }
+        .list b{display:block; font-size:40px; color:#FFF; line-height:40px;}
+        .list .meta{margin:0 0 25px 0; color:#979680;}
+        .list h2 a{font-size: 1.8em; }
+        .list p{ display:block; line-height:18px;}
+         .wz-text{color: black}
+        .tuijian{border: 1px solid #f0f0f0;width: 20%;margin-left: 17%;height: 80px; margin-top: -100px;border-radius: 10px;}
+        .art-header{color: black;height: 20px;margin-left: 10px;font-size: 14px;line-height: 28px}
+        .a-header:hover{text-decoration: underline}
+        .chakanquanbu{width: 91%; font-size: 16px;font-weight: lighter;border: 1px solid;margin-top: 30px;  margin-left: 6%; border-radius: 5px;outline: none;height: 25px;line-height: 25px;}
+         .chakanquanbu:active{color: white;background-color: #333}
+        .ll{color: #787878}
+        .ll:hover{color: #ea6f5a}
+        .tuijian-show{background-color:white;border: 1px solid #ddd;width: 155px;margin-left: 20%;height: 155px; margin-top: -265px;border-radius: 5px;position: absolute;text-align: center;display: none}
+        #back_top:hover{background-color: hsla(0,0%,71%,.1);}
+    </style>
+</head>
+<body id="page-top" style="background-color: white">
+
+<div class="navbar-wrapper" style="background-color: white;color: black;border-bottom-color: #d6d6d6;">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation"  style="background-color: white;color: black;border-bottom-color: #d6d6d6;height: 55px;">
+            <div class="container" style="background-color: white;color: black;border-bottom-color: #d6d6d6;">
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div id="navbar" style="height: 30px;" >
+                      <a href="/user/publish"><div class="xie">
+                            <img width="20" height="20"  style="margin-left: 17%;margin-top: 10px;" src="/static/img/shuxie.png"/>
+                            <div style="margin-left: 7%;color: white;margin-top: 10px;">写文章</div>
+                         </div></a>
+
+                    <a style=" line-height: 58px; font-size: 30px;color:#ea6f5a;margin-left: -12%" class="home-text"  href="#page-top">呱叽</a>
+                    <img style="margin-top: -10px;margin-left: 13%" src="/static/img/user/faxian.png" width="25" height="25"/>
+                   <a style="line-height: 58px; font-size: 20px;color:black;"> 发现</a>
+                   {% if p %}
+                        <a style="line-height: 58px; font-size: 20px;color:black; margin-left: 3%"> 消息</a>
+                {% endif %}
+                    <div  style="display: inline-block;text-align: center" class="sousuo" ><input id="get_search" placeholder="搜索" value="{{ search_content }}" style="height: 40px;font-size: 16px;background-color: #eee;border: 0;outline: none;color: #333"><img onclick="get_search()" width="20" height="20" style="margin-left: 20px;" src="/static/img/user/sousuo.png"></div>
+
+                        <a style=" color: black;float: right;margin-top: 18px;font-size: 16px;" id="userID"> </a>
+                    {% for foo in p %}
+                        <img id="imguser" alt="图片" src="/static/{{foo.img  }}"  style=" float: right;border-radius: 20px;margin-left: 20px;margin-top: 5px;" width="40" height="40"/>
+
+                    {% endfor %}
+                </div>
+               <!-- 下拉列表-->
+                 <div class="square"></div>
+                <div id="navlist">
+                    <ul v-for="i in item_href" >
+                        <li><a href="/user/user_center">我的主页</a></li>
+                        <!-------------/可加可不加------>
+                        <li><a href="/user/publish">发表文章</a></li>
+                        <li><a href="/content/setting">设置</a></li>
+                        <li><a  href="/user/relogin/">退出</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+</div>
+
+
+<div id="fixed_show" style="position: fixed;height:180px;width: 180px;margin-top: 80px;right: 50px;border-radius: 5px;text-align: center;display: none;border:1px solid #f0f0f0">
+    <div>扫码分享</div>
+    <img  src="/static/img/user/erweima.jpeg" width="150" height="150"  />
+</div>
+<!------------------------轮播图------------------------------------------>
+ <div style="display: flex">
+     <div class="lunbo-left">
+         <a href="/content/introduce"><div class="nav-left" style="background-color: #FCAE40">初步介绍</div></a>
+         <a href="/show/process"><div class="nav-left" style="margin-top: 15px;background-color: #F1806E">发展阶段</div></a>
+         <a href="/topic/default"> <div class="nav-left" style="margin-top: 15px;background-color:  #A9CCE7">热门专题</div></a>
+         <a href="/show/chat"> <div class="nav-left" style="margin-top: 15px;background-color:#B5DED6">论坛讨论</div></a>
+    </div>
+     <div class="lunbo-right">
+           <div class="wrapper">
+                 <div id="focus">
+                    <ul>
+                    <li>
+                        <a href="/show/index_1/"><img src="/static/img/lunbo/22.png" alt="焦点图效果下载1" /></a>
+                    </li>
+                    <li>
+                        <a href="/show/index_2/"><img src="/static/img/lunbo/11.png" alt="焦点图效果下载2" /></a>
+                    </li>
+                    <li>
+                        <a href="/show/index_3/"><img src="/static/img/lunbo/33.png" alt="焦点图效果下载3" /></a>
+                    </li>
+                    <li>
+                        <a href="/show/index_3/"><img src="/static/img/lunbo/11.png" alt="焦点图效果下载4" /></a>
+                    </li>
+                    <li>
+                        <a href="/show/index_1/"><img src="/static/img/lunbo/33.png" alt="焦点图效果下载5" /></a>
+                    </li>
+                 </ul>
+             </div>
+        </div>
+    </div>
+ </div>
+<!--------占位-------->
+
+
+
+ <!----------------标签---------------->
+<div style="margin-left: 41%;margin-top: 30px;display: flex">
+    <div style="display: flex;  ">
+        <img style="border-top-left-radius: 3px;border-bottom-left-radius:3px; " width="35" height="35" src="/static/img/lunbo/13_03.jpg">
+        <div class="biaoqian"><a class="ll" href="/topic/default/2" target="_blank" >应用领域</a></div>
+    </div>
+    <div style="display: flex; margin-left: 3% ">
+        <img style="border-top-left-radius: 3px;border-bottom-left-radius:3px; " width="35" height="35" src="/static/img/lunbo/13_04.jpg">
+        <div class="biaoqian"><a class="ll" href="/topic/default/3" target="_blank" >监督学习</a></div>
+    </div>
+    <div style="display: flex; margin-left: 3% ">
+        <img style="border-top-left-radius: 3px;border-bottom-left-radius:3px; " width="35" height="35" src="/static/img/lunbo/13_05.jpg">
+        <div class="biaoqian"><a class="ll" href="/topic/default/5" target="_blank">分析学习</a></div>
+    </div>
+    <div style="display: flex; margin-left: 2% ">
+        <img style="border-top-left-radius: 3px;border-bottom-left-radius:3px; " width="35" height="35" src="/static/img/lunbo/13_03.jpg">
+        <div class="biaoqian"><a class="ll" href="/topic/default/6" target="_blank">归纳学习</a></div>
+    </div>
+</div>
+<div style="margin-left: 41%;margin-top: 20px;display: flex">
+
+    <div style="display: flex; margin-left: 3% ">
+        <img style="border-top-left-radius: 3px;border-bottom-left-radius:3px; " width="35" height="35" src="/static/img/lunbo/long1.jpg">
+        <div class="biaoqian"><a class="ll" >半监督学习</a></div>
+    </div>
+    <div style="display: flex; margin-left: 3% ">
+        <img style="border-top-left-radius: 3px;border-bottom-left-radius:3px; " width="35" height="35" src="/static/img/lunbo/long2.jpg">
+        <div class="biaoqian"><a class="ll" href="/topic/default/4" target="_blank" >类比学习</a></div>
+    </div>
+    <div style="display: flex; margin-left: 3% ">
+         <div style="color:grey;margin-top: 9px;"><a  style="color: #787878" href="/topic/default">更多热门专题 ></a></div>
+    </div>
+</div>
+
+
+<!------------------推荐专家-------------------->
+
+<div class="tuijian-show">
+    <img width="130" height="130" src="/static/img/user/erweima.jpeg" style="margin-top: 13px" />
+</div>
+
+<div class="tuijian">
+       <div style="display: flex">
+           <img width="50" height="50" src="/static/img/user/erweima.jpeg" style="margin-left: 9%;margin-top: 15px;"/>
+            <div style="margin-top: 17px;margin-left: 12%;">
+                <div style="color: black" class="home-text" >欢迎加入我们</div>
+                <div>未来与你同在</div>
+            </div>
+       </div>
+</div>
+
+
+ <div style=" width: 20%;margin-left: 17%;height:300px; margin-top: 30px;border-radius: 10px;">
+      <div style="display: flex">
+          <div>推荐专家</div>
+            <img  width="20" height="20" src="/static/img/user/shuaxin.png" style="margin-left: 52%">
+          <div>换一批</div>
+      </div>
+     <!-----------专家推荐---------------->
+     {% for i in experts %}
+
+           <div style="margin-top: 20px;display: flex">
+              <img  style="float: left;width: 40px;height: 40px;border-radius: 20px;margin-left: 6%;" src="{{ i.img }}"/>
+               <div style="float: left;width: 50%;margin-left: 5%">
+                 <a href="/content/expert_detail/{{ i.id }}" ><div style="color: black;font-size: 14px;">{{ i.name }}</div></a>
+                   <div style="font-size: 13px;width: 126%;margin-top: 3px;">{{ i.introduce | truncatechars:"13" }}</div>
+               </div>
+              <div style=" color: #42c02e;float: left;margin-left: 5%">
+                  +关注
+              </div>
+          </div>
+
+     {% endfor %}
+
+    <a style="color:black;width: 100%" href="/content/expert"> <button class="chakanquanbu"> 查看全部  </button></a>
+
+</div>
+
+<!------------------------------用户文章精选------------->
+<div style="border-top:1px solid #f0f0f0;width: 40%;margin-left: 41%;margin-top: -300px;overflow: hidden">
+<div style=" margin-top: 20px;width: 40%; " id='dongtai'>
+
+         {% for article in articles %}
+              <!----------用来标记文章id，便于评论---------->
+
+              <div style="display: none">{{ article.id }}</div>
+
+              <div style="margin-top: 30px;border-bottom: 1px solid #f0f0f0;width: 300%">
+                  <div style="display: flex">
+                      <img  src="/static/{{ article.user.img }}" width="30" height="30" style="margin-top: -4px;border-radius: 20px;"/>
+                      <div   class="art-header">{{ article.user.userName }} </div>
+                      <div style="margin-left: 3%;line-height: 30px">{{ article.create_date   }}</div>
+                  </div>
+                <a  target="view_window" href="/content/pull_article_page/{{ article.id }}" class="a-header">   <div  style="font-size: 18px;color: black;margin-top: 5px;font-weight: bold">{{ article.title }}</div></a>
+                           <div style="width: 400px;   margin-top: 5px; color: black; text-indent: 20px;letter-spacing: 2px;display: block"> {% autoescape off %}{{ article.tagline | truncatechars:"75" }}  {% endautoescape %}
+                     </div>
+                  <div style="display: flex;">
+                      <button style="color:#ea6f5a;border: 1px solid #ea6f5a;background-color: white;border-radius: 5px;height: 20px;line-height: 18px;margin-top: 5px;">{{ article.type }}</button>
+                      <div style="margin-top: 5px;margin-left: 2%"><img width="20" src="/static/img/user/liulan.png">{{ article.views }}</div>
+                      <div style="margin-top: 5px;margin-left: 2%"><img width="20" src="/static/img/user/pinglun.png">{{ article.talk_count }}</div><!--评论--->
+                      <div  style="margin-top:5px;margin-left:2%;display: flex"><img onclick="click_like({{ article.id }})" id ={{ article.id }}  width="16" height="16"  src="/static/img/user/dianzan.png" /><div id="text{{ article.id}}">{{ article.like_count }}</div></div><!---点赞--->
+                  </div>
+                  <div style="height: 30px;"></div>
+              </div>
+
+         {% endfor %}
+
+     </div>
+</div>
+    <div style="position: fixed;right: 30px;top: 640px;display: none" id="back_top">
+        <div id="btn-top" onclick="backtop()" style="width: 50px;height: 50px;border:1px solid #f0f0f0;text-align: center;"><a  ><img  style="margin-top:8px;" width="30" height="30" src="/static/img/user/zhiding.png"/></a></div>
+    </div>
+
+</div>
+<script src="/static/js/lunbo/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js"></script>
+<script>
+    //从cookie获取用户信息
+    function getCookie(name)
+        {
+            var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+            if(arr=document.cookie.match(reg))
+                return unescape(arr[2]);
+            else
+                return null;
+        }
+    var userId = getCookie('user_id');
+    console.log(userId);
+    if(userId == null){
+         $("#userID").text("登录/注册");
+          $('#userID').attr('href','/user/relogin/');
+        $("#imguser").attr('display','none');
+    }
+     if(userId!= null ){
+         $("#userID").attr('display','none');
+          $("#imguser").hover().css({
+          cursor: "pointer"
+      });
+     }
+//用户的下拉列表
+    $("#imguser").click(function(){
+         if($("#imguser").val()!='请登录'){
+             $(".square").toggle();
+                $("#navlist").toggle();
+            $("#navlist").find("li").mouseover(function(){
+            $(this).css({
+                background: "#fff"
+            });
+            $(this).find("a").css({
+                color: "#000"
+            })
+        });
+         $("#navlist").find("li").mouseout(function(){
+            $(this).css({
+                background: ""
+            });
+            $(this).find("a").css({
+                color: "#fff"
+            })
+        })
+         }
+         else{
+             $('#userID').attr('href','/user/relogin/');
+         }
+    });
+    // 轮播图
+	 $(function() {
+        var sWidth = $("#focus").width(); //获取焦点图的宽度（显示面积）
+        var len = $("#focus ul li").length; //获取焦点图个数
+        var index = 0;
+        var picTimer;
+
+        //以下代码添加数字按钮和按钮后的半透明条，还有上一页、下一页两个按钮
+        var btn = "<div class='btnBg'></div><div class='title'></div><div class='btn'>";
+
+        for(var i=0; i < len; i++) {
+        btn += "<span></span>";
+         }
+        btn += "</div><div class='preNext pre'></div><div class='preNext next'></div>";
+        $("#focus").append(btn);
+        $("#focus .btnBg").css("opacity",0.5);
+
+        //为小按钮添加鼠标滑入事件，以显示相应的内容
+        $("#focus .btn span").css("opacity",0.4).mouseover(function() {
+            index = $("#focus .btn span").index(this);
+            showPics(index);
+        }).eq(0).trigger("mouseover");
+
+        //上一页、下一页按钮透明度处理
+        $("#focus .preNext").css("opacity",0.2).hover(function() {
+            $(this).stop(true,false).animate({"opacity":"0.5"},300);
+        },function() {
+            $(this).stop(true,false).animate({"opacity":"0.2"},300);
+        });
+
+        //上一页按钮
+        $("#focus .pre").click(function() {
+            index -= 1;
+        if(index == -1) {index = len - 1;}
+        showPics(index);
+        });
+
+        //下一页按钮
+        $("#focus .next").click(function() {
+            index += 1;
+            if(index == len) {index = 0;}
+            showPics(index);
+        });
+
+        //本例为左右滚动，即所有li元素都是在同一排向左浮动，所以这里需要计算出外围ul元素的宽度
+        $("#focus ul").css("width",sWidth * (len));
+
+        //鼠标滑上焦点图时停止自动播放，滑出时开始自动播放
+        $("#focus").hover(function() {
+            clearInterval(picTimer);
+        },function() {
+            picTimer = setInterval(function() {
+                showPics(index);
+                index++;
+                if(index == len) {index = 0;}
+            },4000); //此4000代表自动播放的间隔，单位：毫秒
+        }).trigger("mouseleave");
+
+        //显示图片函数，根据接收的index值显示相应的内容
+        function showPics(index) { //普通切换
+            var nowLeft = -index*sWidth; //根据index值计算ul元素的left值
+            //$("#focus ul").stop(true,false).animate({"left":nowLeft},300); //通过animate()调整ul元素滚动到计算出的position
+            $("#focus ul").stop(true,false).animate({"left":nowLeft},300);
+            $("#focus .title").text($("#focus ul li").eq(index).contents("a").contents("img").attr("alt"));
+            $("#focus .btn span").stop(true,false).animate({"opacity":"0.4"},300).eq(index).stop(true,false).animate({"opacity":"1"},300); //为当前的按钮切换到选中的效果
+          }
+        });
+
+function click_like(id) {
+     $.ajax({
+         type:"POST",
+         url:'/content/like/',
+         data:{art_id:id},
+         success:function (res) {
+             if (res['code'] == 0){
+                 console.log('1111',$('#'+id));
+                 $('#'+id).attr('src' , '/static/img/user/yizan.png');
+                 $('#text'+id).text('已赞');
+                 $('#text'+id).css('color','#1296db');
+             }
+         }
+     })
+}
+function get_search() {
+
+    $.ajax({
+        type:'POST',
+        data:{
+            search_content: $("#get_search").val()
+        },
+       url: '/api/search_home',
+        success:function (res) {
+           if(res == 'ok') {
+               window.location.href = '/show/chat?d=' + $("#get_search").val().toString()
+           }
+        }
+    });
+}
+
+
+
+    $(window).scroll(function(){
+             //获取距离浏览器顶部距离并赋值th
+         var th = $(window).scrollTop();
+        //用if判断，距离顶部大于300时给一个警告弹窗
+        if(th>400){
+            $('#fixed_show').css('display','block');
+            $('#back_top').css('display','block')
+        }
+        if(th < 400){
+             $('#fixed_show').css('display','none');
+             $('#back_top').css('display','none')
+        }
+      });
+
+$(".tuijian").hover(function(){
+    $(".tuijian-show").css("display","block");
+},function(){
+    $(".tuijian-show").css("display","none");
+});
+   function backtop() {
+       var top=document.getElementById("btn-top");
+     var bottom=document.getElementById("btn-top");
+    top.onclick=function(){
+       //alert(11);
+       timer=setInterval(function(){
+           var scrollTop=document.documentElement.scrollTop||document.body.scrollTop;
+           var ispeed=Math.floor(-scrollTop/6);
+           console.log(ispeed)
+           if(scrollTop==0){
+               clearInterval(timer);
+           }
+           document.documentElement.scrollTop=document.body.scrollTop=scrollTop+ispeed;
+       },100)
+   };
+
+   }
+   function getmore() {
+       var a = "<div style='display: none'>{{ article.id }}</div>\
+              <div style='margin-top: 30px;border-bottom: 1px solid #f0f0f0;width: 300%'>\
+                  <div style='display: flex'>\
+                      <img  src='/static/{{ article.user.img }}' width='30' height='30' style='margin-top: -4px;border-radius: 20px;'/>\
+                      <div   class='art-header'>{{ article.user.userName }} </div>\
+                      <div style='margin-left: 3%;line-height: 30px'>{{ article.create_date   }}</div>\
+                  </div>\
+                <a  target='view_window' href='/content/pull_article_page/{{ article.id }}'' class='a-header'>   <div  style='font-size: 18px;color: black;margin-top: 5px;font-weight: bold'>{{ article.title }}</div></a>\
+                           <div style='width: 400px;   margin-top: 5px; color: black; text-indent: 20px;letter-spacing: 2px;display: block'> {% autoescape off %}{{ article.tagline | truncatechars:"75" }}  {% endautoescape %}\
+                     </div>\
+                  <div style='display: flex;'>\
+                      <button style='color:#ea6f5a;border: 1px solid #ea6f5a;background-color: white;border-radius: 5px;height: 20px;line-height: 18px;margin-top: 5px;'>{{ article.type }}</button>\
+                      <div style='margin-top: 5px;margin-left: 2%'><img width='20' src='/static/img/user/liulan.png'>{{ article.views }}</div>\
+                      <div style='margin-top: 5px;margin-left: 2%'><img width='20' src='/static/img/user/pinglun.png'>{{ article.talk_count }}</div>\
+                      <div  style='margin-top:5px;margin-left:2%;display: flex'><img onclick='click_like({{ article.id }})' id ={{ article.id }}  width='16' height='16'  src='/static/img/user/dianzan.png' /><div id='text{{ article.id}}'>{{ article.like_count }}</div></div>\
+                  </div>\
+                  <div style='height: 30px;'></div>\
+              </div>"
+   }
+   var a = "<div style='display: none'>{{ article.id }}</div>\
+              <div style='margin-top: 30px;border-bottom: 1px solid #f0f0f0;width: 300%'>\
+                  <div style='display: flex'>\
+                      <img  src='/static/{{ article.user.img }}' width='30' height='30' style='margin-top: -4px;border-radius: 20px;'/>\
+                      <div   class='art-header'>{{ article.user.userName }} </div>\
+                      <div style='margin-left: 3%;line-height: 30px'>{{ article.create_date   }}</div>\
+                  </div>\
+                <a  target='view_window' href='/content/pull_article_page/{{ article.id }}'' class='a-header'>   <div  style='font-size: 18px;color: black;margin-top: 5px;font-weight: bold'>{{ article.title }}</div></a>\
+                           <div style='width: 400px;   margin-top: 5px; color: black; text-indent: 20px;letter-spacing: 2px;display: block'> {% autoescape off %}{{ article.tagline | truncatechars:"75" }}  {% endautoescape %}\
+                     </div>\
+                  <div style='display: flex;'>\
+                      <button style='color:#ea6f5a;border: 1px solid #ea6f5a;background-color: white;border-radius: 5px;height: 20px;line-height: 18px;margin-top: 5px;'>{{ article.type }}</button>\
+                      <div style='margin-top: 5px;margin-left: 2%'><img width='20' src='/static/img/user/liulan.png'>{{ article.views }}</div>\
+                      <div style='margin-top: 5px;margin-left: 2%'><img width='20' src='/static/img/user/pinglun.png'>{{ article.talk_count }}</div>\
+                      <div  style='margin-top:5px;margin-left:2%;display: flex'><img onclick='click_like({{ article.id }})' id ={{ article.id }}  width='16' height='16'  src='/static/img/user/dianzan.png' /><div id='text{{ article.id}}'>{{ article.like_count }}</div></div>\
+                  </div>\
+                  <div style='height: 30px;'></div>\
+              </div>"
+</script>
+<script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js"></script>
+</body>
+</html>

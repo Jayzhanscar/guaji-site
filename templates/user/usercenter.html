@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}
+    机器学习
+{% endblock %}
+{% block style %}
+    <style>
+       .aaa{margin-left: 30px;font-size: 16px;color: #333;font-weight: bold;height: 40px}
+       .aaa:hover{ border-bottom: 2px solid #646464; }
+    </style>
+{% endblock %}
+{% block mainbody %}
+
+
+<div style="margin: 0 auto;display: flex ">
+       <div style="width: 70%;margin-left: 8%">
+                   <div  style="margin-left: 7%;margin-top: 35px;width: 50%;height:150px;background-color:white;border-radius: 10px; ">
+                 {% for foo in p %}
+                 <div style="display: flex;">
+                       <img src="/static/{{  foo.img  }}" height="80"  width="80" style="border-radius: 40px;margin-left:70px;margin-top: 50px;">
+                      <div style="display: inline-block">
+                          <div style="font-size: 22px; margin-top: 50px; font-weight: bold;color: black;margin-left: 50px;display: flex">
+                              <div>{{ foo.userName}}</div>
+                               {% if foo.sex == 1 %}
+                                   <img src="/static/img/icon/nan.png"   width="30" height="30" />
+                                   {% elif foo.sex == 2 %}
+                                       <img src="/static/img/icon/nv.png" width="30" height="30" />
+                              {% endif %}
+                          </div>
+                          <div style="display: flex;margin-left: 30px;margin-top: 10px;">
+                              <ul style="display: flex;list-style: none;text-align: center" id="urll">
+                                  <li style="margin-left: 20px;">
+                                      <div>1</div>
+                                      <div>关注 </div>
+                                  </li>
+                                  <li style="margin-left: 20px;">
+                                      <div>9</div>
+                                      <div>粉丝 </div>
+                                  </li>
+                                  <li style="margin-left: 20px;">
+                                      <div>66</div>
+                                      <div>文章 </div>
+                                  </li>
+                                  <li style="margin-left: 20px;">
+                                      <div>66</div>
+                                      <div>喜欢 </div>
+                                  </li>
+                              </ul>
+                         </div>
+                      </div>
+                 </div>
+                 {% endfor %}
+             </div>
+
+             <div style=" height: 40px;width: 600px;margin-left: 15%;margin-top: 20px;border-bottom: 1px solid #f0f0f0">
+                 <ul style="list-style: none;display: flex">
+                     <li  class="aaa"><img style="margin-top: -3px" src="/static/img/icon/wenzhang1.png" width="16" height="16">  文章</li>
+                     <li  class="aaa"><img style="margin-top: -3px" src="/static/img/icon/dongtai.png" width="16" height="16">  动态</li>
+                     <li  class="aaa"><img style="margin-top: -3px" src="/static/img/icon/pinglun.png" width="16" height="16">  最新评论</li>
+                     <li  class="aaa" ><img style="margin-top: -3px" src="/static/img/icon/remen.png" width="20" height="20">  热门</li>
+                 </ul>
+             </div>
+       <div style="width: 60%;height: 300px;margin-left: 15%;margin-top: 20px;">
+            {% for i in articles %}
+                <div style="height: 120px;width: 100%;border-bottom: 1px solid #f0f0f0;margin-top: 20px;">
+                     <div style="display: flex">
+                        <img  style="border-radius: 50%" width="32" height="32" src="/static/{{ i.user.img }}"/>
+                         <div style="width:100px;color: #333;font-size: 13px;line-height: 32px;margin-left: 2%">{{ i.user.userName }}</div>
+                         <div style="color: #969696;font-size: 13px;line-height: 32px;margin-left: 10px;">{{ i.create_date }}</div>
+                         <img src="/static/img/icon/shanchu.png" width="20" height="20" style="margin-top: 5px;margin-left: 38%;"/>
+                         <div style="font-size: 13px;margin-left: 1%;line-height: 32px;">删除</div>
+                    </div>
+                    <a target="view_window" href="/content/pull_article_page/{{ i.id }}"><div  style="margin: 10px 0 4px;font-size: 18px;color: #333">{{ i.title }}</div></a>
+                   <div style="font-size: 13px;color: #333;margin-top: 10px">{% autoescape off %}{{ i.tagline | truncatechars:"75" }}  {% endautoescape %}</div>
+                </div>
+           {% endfor %}
+       </div>
+ </div>
+<div style=" height: 300px;width: 20%; margin-left: -100px;margin-top: 100px;font-size: 16px;color: #333;border-top: 1px solid #f0f0f0;border-bottom: 1px solid #f0f0f0;">
+         <div style="margin-top: 30px;"><img width="20" height="20" src="/static/img/icon/gerenguanzhu.png" />&nbsp;&nbsp;我关注的专题</div>
+         <div style="margin-top: 20px;height: 50px;border-bottom: 1px solid #f0f0f0"><img width="20" height="20" src="/static/img/icon/xxh.png" />&nbsp;&nbsp;我喜欢的文章</div>
+          <div style="margin-top: 30px;"> &nbsp&nbsp;我创建的专题</div>
+     </div>
+</div>
+  {% endblock %}
+{% block js %}
+
+
+
+{% endblock %}

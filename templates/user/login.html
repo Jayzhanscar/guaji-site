@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+{% load static %}
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6 lt8"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7 lt8"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8 lt8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="UTF-8" />
+        <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">  -->
+        <title> 机器学习</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="description" content="Login and Registration Form with HTML5 and CSS3" />
+        <meta name="keywords" content="html5, css3, form, switch, animation, :target, pseudo-class" />
+        <meta name="author" content="zhanlingjie" />
+        <link href="{% static 'css/login/login2.css' %}"    rel="stylesheet" type="text/css" >
+    </head>
+    <body style="background-color: #f1f1f1">
+    <div style=" font-size: 35px;position: absolute;margin-top: -50px;margin-left: 50px;color: #ea6f5a">机器学习</div>
+    <div class="login" style="margin-top:100px;border-radius: 5px;">
+    <div class="header">
+        <div class="switch" id="switch"><a class="switch_btn_focus" id="switch_qlogin" href="javascript:void(0);" tabindex="7">快速登录</a>
+			<a class="switch_btn" id="switch_login" href="javascript:void(0);" tabindex="8">快速注册</a><div class="switch_bottom" id="switch_bottom" style="position: absolute; width: 64px; left: 0px;"></div>
+        </div>
+    </div>
+
+
+    <div class="web_qr_login" id="web_qr_login" style="display: block; height: 235px;">
+
+            <!--登录-->
+            <div class="web_login" id="web_login">
+
+
+               <div class="login-box">
+
+
+			<div class="login_form">
+				<form action="http://www.jq22.com" name="loginform" accept-charset="utf-8" id="login_form" class="loginForm" method="post"><input type="hidden" name="did" value="0"/>
+               <input type="hidden" name="to" value="log"/>
+                <div class="uinArea" id="uinArea">
+                <label class="input-tips" for="u">帐号：</label>
+                <div class="inputOuter" id="uArea">
+
+                    <input type="text" id="u" name="username" class="inputstyle"/>
+                </div>
+                </div>
+                <div class="pwdArea" id="pwdArea">
+               <label class="input-tips" for="p">密码：</label>
+               <div class="inputOuter" id="pArea">
+
+                    <input type="password" id="p" name="p" class="inputstyle"/>
+                </div>
+                </div>
+
+                <div style="padding-left:50px;margin-top:20px;"><input type="button"  onclick="login()" value="登 录" style="width:150px;" class="button_blue"/></div>
+              </form>
+           </div>
+
+            	</div>
+
+            </div>
+            <!--登录end-->
+  </div>
+
+  <!--注册-->
+    <div class="qlogin" id="qlogin" style="display: none; ">
+
+    <div class="web_login"><form name="form2" id="regUser" accept-charset="utf-8"  action="http://www.jq22.com" method="post">
+	      <input type="hidden" name="to" value="reg"/>
+		      		       <input type="hidden" name="did" value="0"/>
+        <ul class="reg_form" id="reg-ul">
+        		<div id="userCue" class="cue">快速注册请注意格式</div>
+                <li>
+
+                    <label for="user"  class="input-tips2">用户名：</label>
+                    <div class="inputOuter2">
+                        <input type="text" id="user" name="user" maxlength="16" class="inputstyle2"/>
+                    </div>
+
+                </li>
+
+                <li>
+                <label for="passwd" class="input-tips2">密码：</label>
+                    <div class="inputOuter2">
+                        <input type="password" id="passwd"  name="passwd" maxlength="16" class="inputstyle2"/>
+                    </div>
+
+                </li>
+                <li>
+                <label for="passwd2" class="input-tips2">确认密码：</label>
+                    <div class="inputOuter2">
+                        <input type="password" id="passwd2" name="" maxlength="16" class="inputstyle2" />
+                    </div>
+
+                </li>
+
+                <li>
+                 <label for="qq" class="input-tips2" >账号：</label>
+                    <div class="inputOuter2">
+
+                        <input type="text" id="qq" name="qq" maxlength="11" class="inputstyle2"/>
+                    </div>
+
+                </li>
+
+                <li>
+                    <div class="inputArea">
+                        <input type="button"   onclick="register()" style="margin-top:10px;margin-left:85px;" class="button_blue" value="同意协议并注册"/> <a href="#" class="zcxy" target="_blank">注册协议</a>
+                    </div>
+
+                </li><div class="cl"></div>
+            </ul></form>
+    </div>
+
+
+    </div>
+    <!--注册end-->
+</div>
+    <script type="text/javascript" src="{%  static 'js/login/login.js' %}"></script>
+    <script type="text/javascript" src="{% static  'js/login/jquery-1.9.0.min.js' %}"></script>
+    <script>
+
+
+
+     $('#switch_qlogin').click(function(){
+		$('#switch_login').removeClass("switch_btn_focus").addClass('switch_btn');
+		$('#switch_qlogin').removeClass("switch_btn").addClass('switch_btn_focus');
+		$('#switch_bottom').animate({left:'0px',width:'70px'});
+		$('#qlogin').css('display','none');
+		$('#web_qr_login').css('display','block');
+
+		});
+	$('#switch_login').click(function(){
+		$('#switch_login').removeClass("switch_btn").addClass('switch_btn_focus');
+		$('#switch_qlogin').removeClass("switch_btn_focus").addClass('switch_btn');
+		$('#switch_bottom').animate({left:'154px',width:'70px'});
+
+		$('#qlogin').css('display','block');
+		$('#web_qr_login').css('display','none');
+		});
+
+        function login() {
+            $.ajax({
+                url: '/user/login/',
+                type: "POST",
+                data:{
+                    name:$('#u').val(),
+                    pwd:$('#p').val()
+                },
+                success: function (res) {
+                     console.log(res);
+                    if(res.data==1){
+                        window.location.href ='/user/info/'
+                    }
+                },
+                error:function () {
+                    alert('登陆失败')
+                }
+            });
+
+        }
+        function register() {
+            if ($('#user').val() == "") {
+			$('#user').focus().css({
+				border: "1px solid red",
+				boxShadow: "0 0 2px red"
+			});
+			$('#userCue').html("<font color='red'><b>用户名不能为空</b></font>");
+			return false;
+		}
+
+
+
+		if ($('#user').val().length < 4 || $('#user').val().length > 16) {
+
+			$('#user').focus().css({
+				border: "1px solid red",
+				boxShadow: "0 0 2px red"
+			});
+			$('#userCue').html("<font color='red'><b>×用户名位4-16字符</b></font>");
+			return false;
+
+		}
+
+
+
+		if ($('#passwd').val().length < pwdmin) {
+			$('#passwd').focus();
+			$('#userCue').html("<font color='red'><b>×密码不能小于" + pwdmin + "位</b></font>");
+			return false;
+		}
+		if ($('#passwd2').val() != $('#passwd').val()) {
+			$('#passwd2').focus();
+			$('#userCue').html("<font color='red'><b>×两次密码不一致！</b></font>");
+			return false;
+		}
+
+		var sqq = /^[1-9]{1}[0-9]{4,9}$/;
+		if (!sqq.test($('#qq').val()) || $('#qq').val().length < 5 || $('#qq').val().length > 12) {
+			$('#qq').focus().css({
+				border: "1px solid red",
+				boxShadow: "0 0 2px red"
+			});
+			$('#userCue').html("<font color='red'><b>×QQ号码格式不正确</b></font>");return false;
+		} else {
+			$('#qq').css({
+				border: "1px solid #D7D7D7",
+				boxShadow: "none"
+			});
+
+		}
+             $.ajax({
+                url: '/user/register/',
+                type: "POST",
+                data:{
+                    name:$('#user').val(),
+                    email:$('#qq').val(),
+                    pwd:$('#passwd').val(),
+                    pwd1:$('#passwd2').val()
+                },
+                success: function (res) {
+                     console.log(res);
+                    if(res==3){
+                       alert('注册成功')
+                    }
+                },
+                error:function () {
+                  alert('注册失败')
+                }
+            });
+        }
+
+    </script>
+    </body>
+</html>

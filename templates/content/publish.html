@@ -1,0 +1,207 @@
+
+{% extends "base.html" %}
+<!doctype html>
+<html lang="en">
+
+ {% block style %}
+        <link rel="stylesheet" type="text/css" href="/static/css/publish/style.css">
+    <link rel="stylesheet" type="text/css" href=" /static/css/publish/simditor.css" />
+    <link href="/static/css/publish/j-select.css">
+    <link href="/static/css/publish/message.css">
+    <link rel="stylesheet"  href="/static/css/publish/daohang.css"  media="screen" type="text/css" />
+
+
+    <style>
+
+        h1{
+             margin-top: 50px;
+            font-weight: bold;
+            }
+
+        .fabiao{box-shadow: 0 0 7px silver;margin-top: 0px;width: 80%;margin-left: 10%; height: 480px;}
+        .biaoti{height: 40px;border:0;border-bottom: 1px solid #f0f0f0;font-size: 25px;outline:none;text-align: center;margin-top: 10px;}
+        .home_user{ border-bottom-right-radius:5px;border-top-right-radius:5px;width: 100px;left:0;top:0;color:white;background-color:coral;text-align: center;line-height:30px; position: absolute;height: 30px; transition: width 2s, height 2s, transform 2s;-webkit-transition: width 2s, height 2s, -webkit-transform 2s;}
+        .home_user:hover{ width:10%;height:40px;line-height: 40px;}
+        .fabiao-btn{position: absolute;background-color: #9da8a9;width: 80px;height: 30px;right: 160px;top:145px;text-align: center;color: white;border-radius: 5px;line-height: 30px;font-size: 20px;}
+
+    </style>
+ {% endblock %}
+
+ {% block mainbody %}
+<!----------------头部-------------------------->
+<div class='alll' >
+        <div class='boxs'>
+            <a href='/user/info/'><div class='cardd bgg-01'><span class='cardd-content'>主页</span></div></a>
+        </div>
+        <div class='boxs'>
+            <a href='/user/user_center'><div class='cardd bgg-02'><span class='cardd-content'>个人主页</span></div></a>
+        </div>
+        <div class='boxs'>
+            <a href='#'><div class='cardd bgg-03'><span class='cardd-content'>进入专题</span></div></a>
+        </div>
+        <div class='boxs'>
+            <a href='#'><div class='cardd bgg-04'><span class='cardd-content'></span></div></a>
+        </div>
+        <div class='boxs'>
+            <a href='#'><div class='cardd bgg-05'><span class='cardd-content'>menu item #5</span></div></a>
+        </div>
+        <div class='boxs'>
+            <a href='#'><div class='cardd bgg-06'><span class='cardd-content'>long menu item #1</span></div></a>
+        </div>
+</div>
+
+<div style="height: 70px;background-color:white;width: 100%"></div>
+<br><br><br><br>
+<div align="center" style="margin-top: -140px;font-weight: bold;color: white">
+</div>
+
+
+
+
+<!--------------------发表页面-------------------------------->
+<div>
+<div class="fabiao" id="fabiao">
+    <div v-if="isShow">
+        <div style="text-align: center;margin-top: 30px;"><input  id="biaoti" class="biaoti"  placeholder="请输入标题" /></div>
+            <textarea  id="editor" placeholder="请输入正文" autofocus  style="margin-top: 30px;"></textarea>
+            <div style="display: flex;margin-top:6px;margin-left: 850px;">
+                <div>类型：</div>
+                <div>
+                    <select id="ml_type" class="select" >
+                        <option value="监督学习">监督学习</option>
+                        <option value="无监督学习">无监督学习</option>
+                        <option value="强化学习">强化学习</option>
+                        <option value="回归">回归</option>
+                        <option value="分类">分类</option>
+                        <option value="异常检测">异常检测</option>
+                        <option value="降维">降维</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+</div>
+
+
+
+</div>
+
+<div class="fabiao-btn" onclick="pushArticle()">发布</div>
+<!------------------------------------------------------------->
+ {% endblock %}
+
+
+ {% block js %}
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="/static/js/publish/module.min.js"></script>
+<script type="text/javascript" src="/static/js/publish/hotkeys.min.js"></script>
+<script type="text/javascript" src="/static/js/publish/uploader.min.js"></script>
+<script type="text/javascript" src="/static/js/publish/simditor.min.js"></script>
+
+
+
+<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+<script>
+    //禁止使用滚动条
+    $(document.body).css({
+   "overflow-x":"hidden",
+   "overflow-y":"hidden"
+ });
+    var app = new Vue({
+        el:'#fabiao',
+        data:{
+            num:9,
+            articleList:[],
+            isShow: true
+
+        },
+        created:function () {
+             $.ajax({
+                    type : "POST",
+                    url : "/content/blog_query/",
+                    dataType: "json",
+                    data : {
+                        user_id:getcookie('user_id')
+                    },
+                    success :function(res) {
+                        for( var i=0;i<res.length;i++){
+                            app.articleList.push(res[i].fields)
+                        }
+                          console.log(app.articleList);
+                         $('.fabiao_num').html('已发表'+res.length+'篇')
+                    },
+                    error : function(){
+                    }
+                });
+        },
+        methods:{
+        }
+    });
+     /////////////////////////////////////////
+    function  pushArticle() {
+         var title = $('#biaoti').val();
+         var content = toTextarea($("#editor").val());
+         var type =$("#ml_type option:selected").val();
+        if(title  == " "){
+            alert("标题为空，请重新输入")
+        }
+        if(content == " "){
+            alert("内容为空，请重新输入")
+        }
+        else{
+            $.ajax({
+                    type : "POST",
+                    url : "/content/user_publish/",
+                    dataType: "json",
+                    data : {
+                        user_id:getcookie('user_id'),
+                        title:title,
+                        content :content,
+                        type:type
+                    },
+                    success : function(re) {
+                       console.log(re);
+                        if(parseInt(re)==1){
+                            alert("发表成功");
+                           $('#biaoti').val("") ;
+                        toTextarea($("#editor").val(""));
+
+                        }
+                        else{
+
+                            alert("发表失败")
+
+                        }
+                    },
+                    error : function(){
+                           alert("发表失败")
+                      }
+                });
+        }
+    }
+
+   ////////从cookie读取user_id
+    function getcookie(objname){//获取指定名称的cookie的值
+        var arrstr = document.cookie.split("; ");
+        for(var i = 0;i < arrstr.length;i ++){
+            var temp = arrstr[i].split("=");
+            if(temp[0] == objname) return unescape(temp[1]);
+                }
+            }
+///////////////////////////////编写文章页面
+var editor = new Simditor({
+  	textarea: $('#editor')
+  	//optional options
+});
+
+//////////////////////保存文件内容 转化为html格式文件
+    function toTextarea(str){
+        var reg=new RegExp("<br>","g");
+        var regSpace=new RegExp("&nbsp;","g");
+        str = str.replace(reg,"\n");
+        str = str.replace(regSpace," ");
+        return str;
+}
+
+</script>
+{% endblock %}

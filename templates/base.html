@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   <title>呱叽-记录你的机器学习</title>
+     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/lunbo/swiper.min.css">
+
+     <style>
+        @font-face
+        {
+             font-family: myFirstFont;
+             src: url(/static/font/Niconne-Regular.ttf);
+         }
+        .home-text{font-family: myFirstFont;}
+        body{
+            background: #eee none repeat scroll 0 0;
+             margin: 0;
+            padding: 0;
+            overflow-y: scroll;
+            width: 100%;
+        }
+        a{
+            color: white;
+        }
+        a:hover{
+            text-decoration:none;
+            color: white;
+        }
+         #navlist {
+            width: 120px;
+             height: 170px;
+            background: #ea6f5a;
+            position: absolute;
+             border-radius: 10px;
+             right: 90px;
+             top: 60px;
+             display: none;
+        }
+         #navlist>ul>li{
+             margin-left: -40px;
+             margin-top: 10px;
+              list-style: none;
+             text-align: center;
+             padding:5px;
+         }
+        #navlist>ul>li>a{
+            color: #fff;
+            text-decoration: none;
+        }
+        .square{
+            width: 0;
+            height: 0;
+            border-width: 0 10px 20px 15px;
+            border-color: #ea6f5a transparent;
+            border-style: solid;
+            position: absolute;
+            right: 140px;
+            top: 50px;
+            display: none;
+        }
+        .lunbo-left{height: 275px;width: 20% ;margin-top: 100px;margin-left: 15%;color: white;}
+        .lunbo-right{ width: 40%;border-radius: 10px;height: 275px;margin-top: 100px;margin-left: 6%; overflow: hidden;}
+        .nav-left{background-color: coral;width: 91%;height: 45px;margin-top: 5px;margin-left: 10%;border-radius: 5px;line-height: 45px;font-size: 20px;text-align: center;transition: width 0.5s, height 0.5s;
+          -webkit-transition: width  0.5s,height 0.5s;}
+        .nav-left:hover{width: 90%;height: 50px; line-height: 50px;text-align: center;cursor:pointer}
+           body,ul,span,li,p{padding:0;margin:0;}
+        .wrapper{
+            float:left;
+            width:785px;
+            height:413px;
+        }
+        #focus{width:785px;height:413px;overflow:hidden;position:relative;}
+        #focus ul{height:413px;position:absolute;}
+        #focus ul li{float:left;width:785px;height:413px;overflow:hidden;position:relative;background:#000;}
+        #focus ul li div{position:absolute;overflow:hidden;}
+        #focus .btnBg{position:absolute;width:785px;height:40px;left:0;bottom:0;background:#000;}
+        #focus .title{position:absolute;width:545px;height:40px;left:0;bottom:0;text-align:left;line-height: 40px;padding-left: 20px;color:#fff; cursor:pointer;}
+        #focus .btn{position:absolute;width:240px;height:10px;right:30px;bottom:10px;text-align:right;}
+        #focus .btn span{display:inline-block;_display:inline;_zoom:1;width:43px;height:2px;_font-size:0;margin-left:5px;cursor:pointer;background:#fff;}
+        #focus .btn span.on{background:#fff;}
+        #focus .pre{left:0;}
+        #focus .next{right:0;background-position:right top;}
+        .catlog-item3 a, .catlog-item4 a{
+            display: block;width:167px;height:139px;
+            text-align: center;
+            line-height: 139px;
+        }
+        .catlog-item1 a,.catlog-item5 a{
+            background: #ea6f5a;
+        }
+        .catlog-item1 a:hover,.catlog-item5 a:hover{
+
+        }
+        .catlog-item2 a,.catlog-item6 a{
+            background: #73d842;
+        }
+        .catlog-item2 a:hover,.catlog-item6 a:hover{
+            background: #3fe967;
+        }
+        .catlog-item3 a{
+            background: #3fe967;
+        }
+        .catlog-item3 a:hover{
+            background: #73d842;
+        }
+        .catlog-item4 a{
+            background: #ea6f5a;
+        }
+        .catlog-item4 a:hover{
+            background: #ea6f5a;
+        }
+        .font26Bai a{
+            font-family: "微软雅黑";
+            font-size: 24px;
+            color:#fff;
+            font-weight: bold;
+            text-decoration: none;
+        }
+         input::-webkit-input-placeholder{text-align: center;}
+         input {outline:none;}
+        .biaoqian{width: 80px;  border-top-right-radius:5px;border-bottom-right-radius:5px; background-color: whitesmoke;text-align: center;line-height: 35px;height: 35px;border-left: 0}
+        .sousuo{height:40px;background-color: #eee;border: 0;border-radius: 30px;margin-left: 12%;width: 20%;margin-top: 7px;position: absolute;}
+        .xie{display: flex;background-color: #ea6f5a;width: 8%;float: right; height: 40px;position: absolute;text-align:center;right: 18%;border-radius: 30px;margin-top: 7px;}
+         .wrap{ width:650px; margin:30px auto; overflow:hidden;}
+        .list{ width:650px; padding:0 0 20px 0; margin:0 0 20px 0; border-bottom:1px  solid #f0f0f0;}
+        .list .date{ float:left;  margin:0 20px 0 0; padding:2px 0 0;  }
+        .list b{display:block; font-size:40px; color:#FFF; line-height:40px;}
+        .list .meta{margin:0 0 25px 0; color:#979680;}
+        .list h2 a{font-size: 1.8em; }
+        .list p{ display:block; line-height:18px;}
+         .wz-text{color: black}
+        .tuijian{border: 1px solid #f0f0f0;width: 18%;margin-left: 17%;height: 80px; margin-top: -85px;border-radius: 10px;}
+        .art-header{color: black;height: 20px;margin-left: 10px;font-size: 16px;line-height: 26px}
+        .a-header:hover{text-decoration: underline}
+     </style>
+ {% block style %}
+     {% endblock %}
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body id="page-top" style="background-color: white">
+
+<div class="navbar-wrapper" style="background-color: white;color: black;border-bottom-color: #d6d6d6;">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation"  style="background-color: white;color: black;border-bottom-color: #d6d6d6;height: 55px;">
+            <div class="container" style="background-color: white;color: black;border-bottom-color: #d6d6d6;">
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div id="navbar" style="height: 30px;" >
+                      <a href="/user/publish"><div class="xie">
+                            <img width="20" height="20"  style="margin-left: 17%;margin-top: 10px;" src="/static/img/shuxie.png"/>
+                            <div style="margin-left: 7%;color: white;margin-top: 10px;">写文章</div>
+                         </div></a>
+
+                    <a style=" line-height: 58px; font-size: 30px;color:#ea6f5a;margin-left: -12%" class="home-text"  href="/user/info">呱叽</a>
+                    <img style="margin-top: -10px;margin-left: 13%" src="/static/img/user/faxian.png" width="25" height="25"/>
+                   <a style="line-height: 58px; font-size: 20px;color:black;"> 发现</a>
+                    <div  style="display: inline-block;text-align: center" class="sousuo"><input  value="{{ search_content }}" id="get_search" placeholder="搜索" style="height: 40px;font-size: 16px;background-color: #eee;border: 0;outline: none;color: #333"><img onclick="get_search()" width="20" height="20" style="margin-left: 20px;" src="/static/img/user/sousuo.png"></div>
+
+                        <a style=" color: black;float: right;margin-top: 18px;font-size: 16px;" id="userID"> </a>
+                    {% for foo in p %}
+                        <img id="imguser" alt="图片" src="/static/{{foo.img.url }}"  style=" float: right;border-radius: 20px;margin-left: 20px;margin-top: 5px;" width="40" height="40"/>
+
+                    {% endfor %}
+                </div>
+               <!-- 下拉列表-->
+                 <div class="square"></div>
+                <div id="navlist">
+                    <ul v-for="i in item_href" >
+                        <li><a href="/user/user_center">我的主页</a></li>
+                        <!-------------/可加可不加------>
+                        <li><a href="/user/publish">发表文章</a></li>
+                        <li><a href="/content/setting">设置</a></li>
+                        <li><a  href="/user/relogin/">退出</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+</div>
+
+{% block mainbody %}
+{% endblock %}
+<script>
+    //从cookie获取用户信息
+    function getCookie(name)
+        {
+            var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+            if(arr=document.cookie.match(reg))
+                return unescape(arr[2]);
+            else
+                return null;
+        }
+    var userId = getCookie('user_id');
+    console.log(userId);
+    if(userId == null){
+         $("#userID").text("请登录");
+          $('#userID').attr('href','/user/relogin/');
+        $("#imguser").attr('display','none');
+
+    }
+     if(userId!= null ){
+         $("#userID").attr('display','none');
+          $("#imguser").hover().css({
+          cursor: "pointer"
+      });
+     }
+//用户的下拉列表
+    $("#imguser").click(function(){
+         if($("#imguser").val()!='请登录'){
+             $(".square").toggle();
+                $("#navlist").toggle();
+            $("#navlist").find("li").mouseover(function(){
+            $(this).css({
+                background: "#fff"
+            });
+            $(this).find("a").css({
+                color: "#000"
+            })
+        });
+
+         $("#navlist").find("li").mouseout(function(){
+            $(this).css({
+                background: ""
+            });
+            $(this).find("a").css({
+                color: "#fff"
+            })
+        })
+         }
+         else{
+             $('#userID').attr('href','/user/relogin/');
+         }
+
+    });
+
+function get_search() {
+    $.ajax({
+        type:'POST',
+        data:{
+            search_content: $("#get_search").val()
+        },
+       url: '/api/search_home',
+        success:function (res) {
+           if(res == 'ok') {
+               window.location.href = '/show/chat?d=' + $("#get_search").val().toString()
+           }
+        }
+    });
+}
+</script>
+ {% block js %}
+
+{% endblock %}
+</body>
+</html>

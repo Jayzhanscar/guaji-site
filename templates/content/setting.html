@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% block style %}
+    <style>
+        .leftnav{display: flex;line-height: 50px; height: 50px;border-radius: 5px;}
+        .left-font{font-size: 16px;margin-left: 15px;line-height: 50px;color:black}
+        .leftnav:hover{background-color: #f0f0f0}
+        .leftnav.active{background-color: #f0f0f0}
+        .main-z{width: 70%;margin-left: 15%;height: 450px;margin-top: 80px; display: flex}
+        .rightnav{width: 50%;height: 400px;margin-top: 30px;margin-left: 5%}
+        .changeimg{color: #42c02e;border:1px solid #42c02e;width: 15%;height: 30px;line-height: 30px;margin-top: 35px;margin-left: 5%;text-align: center;border-radius: 30px;}
+        .changenicheng{background-color: hsla(0,0%,71%,.1);border: 1px solid #c8c8c8;border-radius: 4px;width: 30%;height: 30px;margin-left: 7%}
+        .hid{
+
+          display: block!important;
+          width: 82px;
+          opacity: 0;
+        }
+        .texteara{background-color: hsla(0,0%,71%,.1);border:1px solid #c8c8c8;height: 100px;width: 80%;margin-left: 10%;border-radius: 5px;}
+    </style>
+{% endblock %}
+
+{% block mainbody %}
+    <div class="main-z">
+
+        <div style="width: 30%;height: 300px;margin-top: 30px;">
+            <div  class="leftnav active">
+                <div>  <img width="35" height="35" src="/static/img/icon/jiben.png"/> </div> <div class="left-font">基本设置</div>
+            </div>
+            <div class="leftnav">
+                   <img width="30" height="30" src="/static/img/icon/jibenziliao.png" style="margin-top: 10px;"/> <div  class="left-font">个人资料</div>
+            </div>
+            <div class="leftnav">
+                  <img width="35" height="35" src="/static/img/icon/wodewenzhang.png" style="margin-top: 5px;"/> <div  class="left-font" >文章信息</div>
+            </div>
+            <div class="leftnav" >
+                  <img width="32" height="32" src="/static/img/icon/zhanghao.png" style="margin-top: 5px;"/> <div  class="left-font" >账号绑定</div>
+            </div>
+        </div>
+
+        <div class="rightnav">
+            {% for i  in p  %}
+                <div style="display: flex;">
+                    <img id="preview" src="/static/{{ i.img }} " style="border-radius: 50px;width: 100px;height: 100px;">
+
+                    <div class="changeimg" style="z-index: 2" ><input unselectable="'on" value="更换图片" class="hid" type="file" name="file" onchange="imgPreview(this)" /></div>
+                <div class="changeimg" style=" margin-left: -75px;z-index: 1;border: 0"> 更换头像</div>
+                </div>
+                <div style="display: flex;margin-top: 30px;height: 50px;border-bottom: 1px solid #f0f0f0">
+                    <div style=" color: grey;font-size: 16px;line-height: 30px;">昵称</div><input id='name' value="{{ i.userName }}"  class="changenicheng"/>
+                </div>
+                <div style="display: flex;margin-top: 30px;height: 50px;border-bottom: 1px solid #f0f0f0">
+                    <div style=" color: grey;font-size: 16px;line-height: 30px;">性别</div>
+                     <div style="margin-left: 5%;margin-top: 3px;">
+                         <input   type="radio" name="radio" value="1" {% if i.sex == 1 %} checked {% endif %}>男
+                           <input  style="margin-left: 20px;" type="radio" name="radio" value="2" {% if i.sex == 2 %} checked {% endif %}>女
+                     </div>
+
+                </div>
+                <div style="display: flex;margin-top: 30px;height: 50px;border-bottom: 1px solid #f0f0f0">
+                    <div style=" color: grey;font-size: 16px;line-height: 30px;">电子邮箱</div><input id="email"  placeholder="请输入正确的邮箱地址" value="{{ i.userEmail }}" class="changenicheng" style="width: 40%"/>
+                   <div class="changeimg" style="margin-top: 0">发送</div>
+                </div>
+                <div style="display: flex;margin-top: 30px;height: 110px;border-bottom: 1px solid #f0f0f0">
+                    <div style=" color: grey;font-size: 16px;line-height: 30px;">简介</div>
+                   <textarea  id= 'jianjie' class="texteara" placeholder="填写你的个人简介">{{ i.jianjie }}</textarea>
+                </div>
+                <div style="display: flex;margin-top: 30px;height: 110px;border-bottom: 1px solid #f0f0f0">
+                   <div  onclick="saveMyself()" style="border-radius: 20px;line-height: 36px;height: 36px;width: 90px;text-align: center;background-color: #42c02e;color: white;font-size: 16px;">保存</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+
+    function imgPreview(fileDom){
+            //判断是否支持FileReader
+            if (window.FileReader) {
+                var reader = new FileReader();
+            } else {
+                alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+            }
+
+            //获取文件
+            var file = fileDom.files[0];
+            console.log(file);
+            var imageType = /^image\//;
+            //是否是图片
+            if (!imageType.test(file.type)) {
+                alert("请选择图片！");
+                return;
+            }
+            var file_pic = new FormData();
+            file_pic.append('file',file);
+            file_pic.append('action','upload');
+            //上传图片
+            $.ajax({
+                url:'/content/setting',
+                type:'POST',
+                data:file_pic,
+                processData : false,
+                 // 告诉jQuery不要去设置Content-Type请求头
+                 contentType : false,
+                success:function (res) {
+                    console.log(res)
+                }
+
+            });
+            //读取完成
+            reader.onload = function(e) {
+                //获取图片dom
+                var img = document.getElementById("preview");
+                //图片路径设置为读取的图片
+                img.src = e.target.result;
+
+            };
+            reader.readAsDataURL(file);
+        }
+    function saveMyself() {
+         var name = $('#name').val();
+         var email = $('#email').val();
+         var jianjie = $('#jianjie').val();
+         var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+             if(!myreg.test(email))
+              {
+                   alert('提示\n\n请输入有效的E_mail！');
+                  return false;
+             }
+
+        var sex = getSex();
+        $.ajax({
+            url: '/content/setting',
+            type:'POST',
+            data:{
+                action:'save',
+                name:name,
+                email:email,
+                jianjie:jianjie,
+                sex:sex
+            },
+            success:function (res) {
+                if(res == 'ok'){
+                    alert('保存成功')
+                }
+            }
+        })
+
+    }
+    function getSex(){
+        var value="";
+        var radio=document.getElementsByName("radio");
+        for(var i=0;i<radio.length;i++){
+            if(radio[i].checked==true){
+                value=radio[i].value;
+                break;
+            }
+        }
+        return value;
+    }
+    </script>
+{% endblock %}

@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block style %}
+     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/usercenter/test.css">
+    <style>
+        .content-publish{ height: 60px;border: 1px solid darkgray;border-radius: 5px;width: 100%}
+        .clik-publish{float: right;background-color: #00a6f2;color: white;border: 0; margin-top: 10px;border-radius: 5px;outline:none;}
+        .clik-publish:active{opacity: 0.8}
+        .guanzhu{margin-left: 5%;background-color: #42c02e;color: white;width: 20%;border-radius: 10px}
+        .xihuan{z-index:0;height: 60px;width: 10%;border: 1px solid #ea6f5a;margin-top: 60px;margin-left: 30%;border-radius: 30px;display: flex;text-align: center;line-height: 60px;color:#ea6f5a;font-size: 20px; }
+        .xihuan:hover{background-color:#ea6f5a;color: white ;z-index:0;}
+        .yiguanzhu{margin-left: 5%;background-color: white;color: #8c8c8c;width: 20%;border-radius: 10px;border: 1px solid #8c8c8c}
+         a:hover{list-style: none}
+    </style>
+{% endblock %}
+{% block mainbody %}
+{% for i in tag %}
+<div style="text-align: center;width: 50%;margin-left: 25%; height: auto;margin-top: 100px;">
+    <div id="user_id" style="display: none;">{{ i.user.Account }}</div>
+    <div style="font-size: 34px;font-weight: bold" id="bt">{{ i.title }}</div>
+    <div style=" height:50px;width: 60%;margin: 30px 0 40px;display: flex">
+        <div><img  width="40" height="40" src="/static/{{ i.user.img }}" style="border-radius: 25px"></div>
+        <div style="margin-left: 10px;width: 80%; height: 50px">
+            <div style="display: flex"> <div>{{ i.user.userName }}</div>
+                {% if is_focus == 0 %}
+                    <div class="guanzhu" id="guanzhu">关注</div>
+                {% elif is_focus == 1 %}
+                    <div class="yiguanzhu" id="guanzhu">已关注</div>
+                {% endif %}
+            </div>
+            <div style="display: flex;margin-top: 5px">
+                <div>{{ i.create_date }}</div>
+                <div style="margin-left: 5px;" >浏览 {{ i.views }}</div>
+                <div style="margin-left: 5px;" >评论 {{ i.talk_count }}</div>
+                <div style="margin-left: 5px;">喜欢 {{ i.like_count }}</div>
+            </div>
+        </div>
+    </div>
+     <div>
+          {% autoescape off %}
+          <div id="zw" style="margin-top: 50px;font-size: 16px;text-indent:2em;letter-spacing: 2px">{{ i.tagline }}</div>
+         {% endautoescape %}
+     </div>
+{% endfor %}
+</div>
+<!-------------回复区------------>
+ <div style="display: flex">
+     <div class="xihuan"><img width="20" height="20" style="margin-top: 20px;margin-left: 27px;z-index: 1" src="/static/img/icon/xihuan.png"><div style="margin-left: 14px;">喜欢</div></div>
+    <div style="width: 30%;margin-left: 4%;margin-top: 60px;overflow: hidden;border-radius: 5px">
+
+        <input id='b_content'   placeholder="说点什么吧..."   class="content-publish"/>
+        <div>
+            <button class="clik-publish" onclick="publish()">评论</button>
+        </div>
+
+    </div>
+ </div>
+<hr style="width: 50%;margin-left: 25%">
+{% for tie in ties %}
+  <div style="height: auto;overflow: hidden;width: 30%;margin-left: 25%;margin-top: 30px;">
+      <div style="display: flex">
+          <img style="border-radius: 20px" width="40" height="40" src="/static/{{ tie.speaker.img }}"/>
+          <div style="width: 60%;margin-left: 3%">
+              <div style="font-size: 20px;line-height: 20px">{{ tie.speaker.userName}}</div>
+             <div style="color: grey;line-height: 30px;font-size: 12px;">{{forloop.counter}}楼 |  {{ tie.create_date }}</div>
+          </div>
+      </div>
+      <div style="height: auto;margin-top: 20px;">{{ tie.message }}</div>
+  </div>
+{% endfor%}
+</div>
+{% endblock %}
+{% block js %}
+ <script>
+// 提交评论
+    function publish() {
+
+         $.ajax({
+             url: '/content/pull_article_page/'+{{ articles_id }},
+             type: "POST",
+             data:{
+                 content:$('#b_content').val()
+             },
+             success: function (res) {
+                  console.log('aaa')
+                }
+             });
+    }
+   $('#guanzhu').click(function(){
+         if( $("#guanzhu").text() == '关注'){
+             $.ajax({
+                type: 'POST',
+                 url:'/api/focus_people',
+                 data:{
+                    Concerned: $("#user_id").text(),
+                    action : 'cencern'
+                 },
+                 success:function (res) {
+                     if(res == 'ok'){
+                         $("#guanzhu").html('已关注');
+                         $("#guanzhu").removeClass('guanzhu');
+                         $("#guanzhu").addClass('yiguanzhu');
+                     }
+                     if(res == 'no'){
+                         alert('关注失败，请先登陆')
+                     }
+
+                 }
+             });
+         }
+         if( $("#guanzhu").text() == '取消关注'){
+             $.ajax({
+                type: 'POST',
+                 url:'/api/focus_people',
+                 data:{
+                    Concerned: $("#user_id").text(),
+                    action : 'cancel'
+                 },
+                 success:function (res) {
+                     if(res == 'ok'){
+                         $("#guanzhu").html('关注');
+                         $("#guanzhu").addClass('guanzhu');
+                         $("#guanzhu").removeClass('yiguanzhu');
+                     }
+                     if(res == 'no'){
+                         alert('取消失败，请先登陆')
+                     }
+
+                 }
+             });
+
+         }
+   });
+
+     $('#guanzhu'). hover(function(){
+            if( $("#guanzhu").text() == '已关注'){
+               $("#guanzhu").html('取消关注');}
+           },function(){
+          if( $("#guanzhu").text() == '取消关注') {
+               $("#guanzhu").html('已关注');
+          }
+     });
+
+
+</script>
+{% endblock %}

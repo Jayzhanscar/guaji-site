@@ -1,0 +1,13 @@
+ {% extends 'base.html' %}
+{% block mainbody %}
+     {%  for i in experts %}
+        <div style=" margin-top: 100px;width: 60%;margin-left: 20%;height: 600px;">
+            <div style="display: flex">
+                <img src="{{ i.img }}" width="200" height="200" style="border-radius: 100px;margin-left: 15%">
+                <div style="margin-top: 60px;margin-left: 5%"><h2>{{ i.name }}</h2></div>
+            </div>
+            <div style="height: 30px;border-bottom: 1px solid #f0f0f0;width: 80%;margin-left: 10%"></div>
+            <div style="width: 80%;margin-left: 10%;margin-top: 30px;text-indent:2em">{{ i.introduce }}</div>
+        </div>
+    {% endfor %}
+ {% endblock %}

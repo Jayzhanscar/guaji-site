@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<style>
+    .px{margin-left: 2%}
+    .px:hover{color: #333}
+    .px:active{color: #333}
+    .ee{color: #333}
+</style>
+</head>
+<body>
+
+ <div style="border:1px solid #f0f0f0;width: 100%;height: 260px;background-color: hsla(0,0%,71%,.1);border-radius: 10px;   color: #333">
+      <div style="width: 100%;height: 120px; border-bottom: 1px solid #f0f0f0 ">
+          <div style="width: 96%;margin-left: 2%; margin-top: 5px;height: 30px;display: flex;line-height: 30px;font-size: 14px;">
+              <div style="margin-left: 5%">相关用户</div>
+              <div style="margin-left: 70%;color: #3194d0">查看全部 ></div>
+          </div>
+          <div style="width: 96%;margin-left: 2%; margin-top: 5px;height: 90px;display: flex">
+              {% for i in user_obj %}
+              <div style="display: flex;margin-left: 5%;margin-top: 20px;">
+                  <div><img style="border-radius: 25px;" width="50" height="50" src="/static/{{ i.img }}"></div>
+                  <div style="margin-left:2%;height: 50px;width: 100px;">
+                      <div>{{ i.userName }}</div>
+                      <div style="font-size: 10px;margin-top: 10px">·喜欢 {{ i.qianming}}</div>
+                  </div>
+              </div>
+              {% endfor %}
+
+          </div>
+      </div>
+     <div style="width: 100%;height: 120px; ">
+         <div style="width: 96%;margin-left: 2%;margin-top: 5px;height: 30px;display: flex;line-height: 30px;font-size: 14px;">
+              <div style="margin-left: 5%">相关专题</div>
+              <div style="margin-left: 70%;color: #3194d0">查看全部 ></div>
+          </div>
+         <div style="width: 96%;margin-left: 2%; margin-top: 5px;height: 90px;display: flex">
+             {% for i in user_obj %}
+              <div style="display: flex;margin-left: 5%;margin-top: 20px;">
+                  <div><img style="border-radius: 25px;" width="50" height="50" src="/static/{{ i.img }}"></div>
+                  <div style="margin-left:2%;height: 50px;width: 100px;">
+                      <div>{{ i.userName }}</div>
+                      <div style="font-size: 10px;margin-top: 10px;">·喜欢 {{ i.qianming}}</div>
+                  </div>
+              </div>
+              {% endfor %}
+          </div>
+      </div>
+
+     <!---------------筛选------------------>
+
+   <div style="height: 30px;width: 97%;margin-top: 25px; position: absolute;display:flex;font-size: 14px;color: #969696">
+       <div class="px active ee">综合排序·</div>
+       <div class="px" >热门文章·</div>
+       <div class="px" >最新发布·</div>
+       <div class="px" >最新评论·</div>
+        <div class="px" >|</div>
+       <div class="px" >时间不限</div>
+       <div  style="margin-left: 10%" >共
+           {% if count %}
+           {{ count }}
+           {% else %}
+            0
+           {% endif %}
+           条结果</div>
+   </div>
+   <!-----------文章-------------->
+     <div style="height: 700px;width: 98%;margin-top: 60px; position:absolute;  ">
+          {% if wz %}
+              {% for j in wz %}
+                         <div style=" margin-top: 30px;height: 200px;width: 100%;">
+                             <div style="display: flex">
+                                 <img  width="40" height="40" style="border-radius: 20px;" src="/static/{{ j.user.img }}">
+                                 <div style="margin-left: 30px;margin-top: 10px;">{{ j.author }}</div>
+                             </div>
+                             <h3 > <a href="/content/pull_article_page/{{ j.id }}"> {{ j.title }}</a></h3>
+                             <div class="wb">{% autoescape off %} {{ j.tagline | truncatechars:"130" }} {% endautoescape %}</div>
+                             <div style="display: flex">
+                                 <div style="line-height: 10px;"><img  width="20" height="20" src="/static/img/user/liulan.png">&nbsp;{{ j.views }}</div>
+                                 <div style="line-height: 15px;margin-left: 3%" ><img width="20" height="20"  src="/static/img/user/pinglun.png">&nbsp;{{  j.talk_count }}</div>
+                                 <div style="line-height: 15px;margin-left: 3%" ><img   width="20" height="20"  src="/static/img/user/dianzan.png">&nbsp;{{ j.like_count }}</div>
+                             </div>
+                         </div>
+              {% endfor %}
+          {% else %}
+              <div style="text-align: center;margin-top: 100px;font-size: 20px;color: #333;">未找到结果</div>
+         {% endif %}
+     </div>
+  </div>
+{% block js %}
+    <script>
+      var s = "{{ search_content }}";
+       var reg = new RegExp("(" + s + ")", "g");
+       var str = "{{ search_content }}";
+       var newstr = str.replace(reg, "<font color=red>$1</font>");
+      //;lpkkkll document.write(newstr + "<br />");
+    </script>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,142 @@
+ {% extends "base.html" %}
+{% block style %}
+    <style>
+    .a{height: 35px;margin-top: 45px;margin-left: 2%;color: #333;font-weight: bold;font-size: 16px}
+         .a:hover{border-bottom: 2px solid #333}
+      .c{margin-left:12%;border-radius:20px;height: 40px;margin-top: 30px;width: 16%;border: 1px solid #42c02e;color: #42c02e;text-align: center;line-height: 40px;font-size: 16px;}
+      .c:hover{background-color: rgba(59,194,29,.05)}
+      .b{margin-left:3%;border-radius:20px;height: 40px;margin-top: 30px;width: 16%; color: white;background-color:#42c02e;text-align: center;line-height: 40px;font-size: 16px;}
+    .share{height: 60px;border-top: 1px solid #f0f0f0;border-bottom: 1px solid #f0f0f0;line-height: 60px;margin-top: 20px;}
+    .tougao{display:none;position: fixed;height: 600px;width: 40%;margin-left: 30%;background-color: white;margin-top: -750px;z-index: 100;border: 1px solid #ddd;border-radius: 5px;}
+    .find{margin-top: 20px;height: 35px; width: 90%;margin-left: 5%;background-color:  #eee;border-radius: 20px;text-align: center;display: flex}
+    </style>
+{% endblock %}
+ {% block mainbody %}
+     <div style="width: 65%;margin-left: 15%;height: 700px;margin-top: 80px;display: flex" id="main">
+        <div style="width: 70%;height: 600px;">
+            {% for i in obj %} <div>{{ i.id }}</div>
+            <div style="margin-top: 10px;width: 90%;margin-left: 5%;display: flex">
+                <div><img src="{{ i.img }}" width="80" height="80" style="border-radius: 10px;"/></div>
+                <div id="topicid" style="display: none">{{ i.topic_id }}</div>
+                <div style="margin-left: 5%">
+                    <div style="font-size: 20px;color: #333;font-weight: bold;margin-top: 10px;">{{ i.topic_name }}</div>
+                    <div style="margin-top: 10px">共收录{{ i.topic_article }}了篇文章·{{ i.topic_focus }}人关注</div>
+                </div>
+                <div  class="c" >投稿</div>
+                <div class="b">+ 关注</div>
+            </div>
+            {% endfor %}
+             <div style="width: 100%;height: 80px;border-bottom: 1px solid #f0f0f0">
+             <ul style="display: flex;height: 80px;list-style: none;margin-top: 10px;">
+                 <li class="a"><img width="20" height="20" src="/static/img/topic/tuijian.png">&nbsp;&nbsp;最新收录</li>
+                 <li class="a"><img src="/static/img/icon/remen.png" width="20" height="20">&nbsp;&nbsp;热门</li>
+             </ul>
+                 {% for i in topic_articles %}
+                     <div style='display: block;margin: 0 0 17px;border-bottom: 1px solid #f0f0f0;width: 100%;height: 150px;'>
+                        <div style="display: flex;margin-top: 20px;">
+                            <img  style="width: 32px;height: 32px;border-radius: 16px;" src="/static/{{ i.user.img }}"/>
+                            <div style="margin-left: 4%;color: #333;line-height: 28px;">{{ i.user.userName }}</div>
+                            <div style="margin-left: 2%;line-height: 28px;">{{ i.create_date }}</div>
+                        </div>
+                       <div><a  href="/content/pull_article_page/{{ i.id }}" style="color: black ;font-size: 18px;margin-top: 20px;line-height: 40px;">{{ i.title }}</a> </div>
+                        <div style="font-size: 13px;color: #333; margin-top: 10px;">{% autoescape off %}{{  i.tagline | truncatechars:"75" }}  {% endautoescape %}</div>
+                     </div>
+                 {% endfor %}
+         </div>
+        </div>
+        <div style="width: 30%;margin-left: 5%">
+            <div>专题公告</div>
+            {% for j in obj %}
+                <div id="hid" style="display: none" >{{ j.topic_notice }}</div>
+                <div id="hidd" style="display: none" >{{ j.topic_notice | truncatechars:"250" }}</div>
+                <div id="content" style="text-indent:2em;color: black;margin-top: 10px;font-size: 15px">{{ j.topic_notice | truncatechars:"250"}}</div>
+            {% endfor %}
+            <div id='zhankai' style="margin-top: 15px;display: flex"><div id="drc">展开描述</div> <img id="zhankai_img" src="/static/img/icon/more_unfold.png" width="20" height="20"></div>
+            <div onclick="shareToXl('我在机器学习网','www.zhanscae.cn','fe')" class="share">分享到 微博<img src="/static/img/icon/weibo.png" width="20" height="20"/></div>
+        </div>
+     </div>
+
+     <div class="tougao">
+        <div style="display: flex;margin-top: 20px;">
+            <div style="color: black;font-size: 16px;font-weight: bold;margin-left: 5%;width: 18%">给该专题投稿</div>
+            <a href="/user/publish/"  style="color:#42c02e;font-size: 13px;width: 20%;line-height: 25px;"> 写篇新文章 </a>
+            <div style="margin-left: 50%;font-size: 16px;" id="cancel"> x </div>
+        </div>
+         <div style="margin-left: 5%;font-size: 10px;">每篇文章只有五次投稿机会</div>
+         <div class="find">
+             <input placeholder="搜索我的文章" style=" width: 70%;height: 35px;line-height: 35px;background-color: #eee;border: 0;outline: none;margin-left: 5%"/>
+             <img src="/static/img/user/sousuo.png" width="20" height="20" style="margin-top: 7px;margin-left: 15%">
+          </div>
+          <div style="margin-top: 30px;height: 200px;width: 100%;border-top: 1px solid #f0f0f0">
+              {% for i in wz %}
+                <div style="height: 60px;border-bottom: 1px solid #f0f0f0;line-height: 60px;display: flex">
+                     <div id="wzid" style="display: none;">{{ i.id }}</div>
+                    <div style="margin-left: 5%">{{ i.title  | truncatechars:"10" }}</div>
+                    {% if  i.topic_name != topic_id  %}
+                    <div class="tg" id='{{ i.id }}' onclick="uptext()" style="height: 20px;width: 40px;border: 1px solid #42c02e;color:  #42c02e;text-align: center;margin-top: 20px;line-height: 20px;position: absolute;right: 20px;border-radius: 10px">投稿</div>
+                    {% elif  i.topic_name == topic_id  %}
+                    <div class="tg" id='{{ i.id }}' style="height: 20px;width: 40px;border: 1px solid #969696;color:  #969696;text-align: center;margin-top: 20px;line-height: 20px;position: absolute;right: 20px;border-radius: 10px">已投</div>
+                    {% endif %}
+                </div>
+              {% endfor %}
+          </div>
+     </div>
+ {% endblock %}
+{% block js %}
+    <script>
+    $(".c").click(function(){
+          $("#main").css('opacity','0.5');
+          $(".tougao").css('display','block')
+     });
+    $("#cancel").click(function(){
+          $("#main").css('opacity','1');
+          $(".tougao").css('display','none')
+     });
+     $("#zhankai").hover(function(){
+         $("#zhankai").css("color","#333");
+         $('#zhankai_img').attr('src','/static/img/icon/more_unfold-2.png')
+        },function(){
+         $("#zhankai").css("color","#676a6c");
+         $('#zhankai_img').attr('src','/static/img/icon/more_unfold.png');
+     });
+      $("#zhankai").click(function(){
+           if( $("#content").text() == $("#hidd").text() ){
+               $('#zhankai_img').attr('src','/static/img/icon/less.png');
+               $("#content").text($("#hid").text());
+           }
+     });
+     function shareToXl(title,url,picurl){
+           var sharesinastring='http://v.t.sina.com.cn/share/share.php?title='+title+'&url='+url+'&content=utf-8&sourceUrl='+url+'&pic='+picurl;
+         window.open(sharesinastring,'newwindow','height=400,width=400,top=100,left=100');
+}  
+    function uptext() {
+         var oDiv = document.getElementsByClassName("tg");
+                    for (var i = 0; i < oDiv.length; i++) {
+                            (function(i) {
+                                oDiv[i].onclick = function() {
+                                    oDiv[i].innerHTML='已投';
+                                    oDiv[i].style.color="#969696";
+                                    oDiv[i].style.border="1px solid #969696";
+                                    var URL = '/topic/default/'+ $('#topicid').text().toString();
+                                    $.ajax({
+                                        url: URL,
+                                        data:{
+                                            csrfmiddlewaretoken: '{{ csrf_token }}',
+                                            action:'contribute',
+                                            article_id:oDiv[i].id
+                                        },
+                                        type:'POST',
+                                        success:function (res) {
+                                             if(res=='ok'){
+                                                  alert('投稿成功')
+                                             }
+                                        }
+                                    })
+                                }
+                            })(i)
+                    }
+    }
+    </script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="/static/js/backend/bootbox.js" type="text/javascript"></script>
+{% endblock %}

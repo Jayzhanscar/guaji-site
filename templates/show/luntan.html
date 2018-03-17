@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% block style %}
+    <style>
+        .head-wz{
+            color:#333;display: flex; width: 100%;height: 50px;text-align: center;line-height: 50px;border-radius: 5px;
+        }
+        .head-wz:hover{background-color: #eee;}
+        .active{
+            background-color: #eee;
+        }
+        .ee{
+            color: #333;
+        }
+    </style>
+{% endblock %}
+{% block mainbody %}
+     <div style="display: flex">
+         <div style=" margin-top: 55px;width: 20%;margin-left: 18%;height: 700px;position: fixed;">
+             <div style="height:230px;margin-top: 30px;border-bottom: 1px solid #f0f0f0">
+                 <div id="wz" class="head-wz active"><img  style="margin-top: 10px;" width="30" height="30" src="/static/img/icon/wwww.png"/><div style="font-size: 16px;margin-left: 5%">文章</div></div>
+                 <div id="yh" class="head-wz" ><img  style="margin-top: 14px;margin-left: 5px;" width="20" height="20" src="/static/img/icon/userwz.png"/><div style="font-size: 16px;margin-left: 5%">用户</div></div>
+                 <div id="zt" class="head-wz" ><img  style="margin-top: 10px;" width="25" height="25" src="/static/img/icon/zhaunti.png"/><div style="font-size: 16px;margin-left: 5%">专题</div></div>
+                 <div  class="head-wz" ><img  style="margin-top: 10px;" width="25" height="25" src="/static/img/icon/dingyue.png"/><div style="font-size: 16px;margin-left: 5%">诀窍</div></div>
+             </div>
+             <div style="height:200px;margin-top: 30px;border-bottom: 1px solid #f0f0f0;">
+                 <div style="display: flex">
+                     <div>热门搜索</div>
+                     <img src="/static/img/user/shuaxin.png" width="20" height="20" style="margin-left: 50%"/>
+                     <div>换一批</div>
+                 </div>
+                 <!----标签---->
+                 <div style="display: flex;margin-top: 20px;margin-left: 3%;">
+                     <div style="border: 1px solid #f0f0f0;border-radius: 5px;margin-left: 3%">区块链</div>
+                     <div style="border: 1px solid #f0f0f0;border-radius: 5px;margin-left: 3%">旅行青蛙</div>
+                     <div style="border: 1px solid #f0f0f0;border-radius: 5px;margin-left: 3%">跳一跳</div>
+                     <div style="border: 1px solid #f0f0f0;border-radius: 5px;margin-left: 3%">区块链</div>
+                     <div style="border: 1px solid #f0f0f0;border-radius: 5px;margin-left: 3%">区块链</div>
+                 </div>
+             </div>
+             <!----最近搜索---->
+             <div style="height:200px;margin-top: 30px;border-bottom: 1px solid #f0f0f0">
+                 <div style="display: flex">
+                     <div>最近搜索</div>
+                     <div style="margin-left: 50%" >清空</div>
+                 </div>
+                 <div style="width: auto;margin-top: 20px;color: #333;margin-left: 5%">
+                     {{ search_content }}
+                     {% for i in now_search %}
+                        {{ i }}
+                     {% endfor %}
+
+                 </div>
+             </div>
+        </div>
+        <div style="margin-top: 77px;width: 45%;height: 900px; margin-left: 40%;" id="wenzhang" >
+             <div style="border:1px solid #f0f0f0;width: 100%;height: 260px;background-color: hsla(0,0%,71%,.1);border-radius: 10px;   color: #333">
+                  <div style="width: 100%;height: 120px; border-bottom: 1px solid #f0f0f0 ">
+                      <div style="width: 96%;margin-left: 2%; margin-top: 5px;height: 30px;display: flex;line-height: 30px;font-size: 14px;">
+                          <div style="margin-left: 5%">相关用户</div>
+                          <div style="margin-left: 70%;color: #3194d0">查看全部 ></div>
+                      </div>
+                      <div style="width: 96%;margin-left: 2%; margin-top: 5px;height: 90px;display: flex">
+                          {% for i in user_obj %}
+                          <div style="display: flex;margin-left: 5%;margin-top: 20px;">
+                              <div><img style="border-radius: 25px;" width="50" height="50" src="/static/{{ i.img }}"></div>
+                              <div style="margin-left:2%;height: 50px;width: 100px;">
+                                  <div>{{ i.userName }}</div>
+                                  <div style="font-size: 10px;margin-top: 10px">·喜欢 {{ i.qianming}}</div>
+                              </div>
+                          </div>
+                          {% endfor %}
+                      </div>
+                  </div>
+                 <div style="width: 100%;height: 120px; ">
+                     <div style="width: 96%;margin-left: 2%;margin-top: 5px;height: 30px;display: flex;line-height: 30px;font-size: 14px;">
+                          <div style="margin-left: 5%">相关专题</div>
+                          <div style="margin-left: 70%;color: #3194d0">查看全部 ></div>
+                      </div>
+                     <div style="width: 96%;margin-left: 2%; margin-top: 5px;height: 90px;display: flex">
+                         {% for i in user_obj %}
+                          <div style="display: flex;margin-left: 5%;margin-top: 20px;">
+                              <div><img style="border-radius: 25px;" width="50" height="50" src="/static/{{ i.img }}"></div>
+                              <div style="margin-left:2%;height: 50px;width: 100px;">
+                                  <div>{{ i.userName }}</div>
+                                  <div style="font-size: 10px;margin-top: 10px;">·喜欢 {{ i.qianming}}</div>
+                              </div>
+                          </div>
+                          {% endfor %}
+                      </div>
+                  </div>
+                 <!---------------筛选------------------>
+               <div style="height: 30px;width: 97%;margin-top: 40px; position: absolute;display:flex;font-size: 14px;color: #969696">
+                   <div class="px   ee">综合排序·</div>
+                   <div class="px" >热门文章·</div>
+                   <div class="px" >最新发布·</div>
+                   <div class="px" >最新评论·</div>
+                    <div class="px" >|</div>
+                   <div class="px" >时间不限</div>
+                   <div  style="margin-left: 10%" >共
+                       {% if count %}
+                       {{ count }}
+                       {% else %}
+                        0
+                       {% endif %}
+                       条结果</div>
+               </div>
+               <!-----------文章-------------->
+                 <div style="height: 700px;width: 40%;margin-top: 60px; position:absolute;" >
+                      {% if wz %}
+                          {% for j in wz %}
+                                     <div style=" margin-top: 30px;height: 200px;width: 100%;">
+                                         <div style="display: flex">
+                                             <img  width="40" height="40" style="border-radius: 20px;" src="/static/{{ j.user.img }}">
+                                             <div style="margin-left: 30px;margin-top: 10px;">{{ j.author }}</div>
+                                         </div>
+                                          <h3 >  <a  href="/content/pull_article_page/{{ j.id }}" style="color: black"> {{ j.title }} </a></h3>
+                                         <div class="wb">{% autoescape off %} {{ j.tagline | truncatechars:"130" }} {% endautoescape %}</div>
+                                         <div style="display: flex">
+                                             <div style="line-height: 10px;"><img  width="20" height="20" src="/static/img/user/liulan.png">&nbsp;{{ j.views }}</div>
+                                             <div style="line-height: 15px;margin-left: 3%" ><img width="20" height="20"  src="/static/img/user/pinglun.png">&nbsp;{{  j.talk_count }}</div>
+                                             <div style="line-height: 15px;margin-left: 3%" ><img   width="20" height="20"  src="/static/img/user/dianzan.png">&nbsp;{{ j.like_count }}</div>
+                                         </div>
+                                     </div>
+                          {% endfor %}
+                      {% else %}
+                          <div style="text-align: center;margin-top: 100px;font-size: 20px;color: #333;"><img   width="20" height="20" src="/static/img/lunbo/ssuo.png"/> &nbsp;未找到结果</div>
+                     {% endif %}
+                 </div>
+              </div>
+        </div>
+       <!--------------用户-------------->
+     {% verbatim %}
+                     <div id="yonghu" style="display: none;border:1px solid tomato;height:600px;width: 40%;background-color: #e4b9b9;margin-top: 80px;margin-left: 40%">
+                          <div v-for="f in func">
+                              <div>{{ f  }}</div>
+                              <div>1111</div>
+                          </div>
+
+                     </div>
+       {% endverbatim %}
+     </div>
+    {% block js %}
+        <script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js"></script>
+        <script>
+        var app = new Vue({
+           el:'#yonghu',
+            data:{
+               func:[  ],
+                i:'effef'
+            }
+        });
+
+            $("#yh").click(function(){
+                     $.ajax({
+                         type:'POST',
+                         url:'/show/chat/',
+                         data:{
+                             action:'yh'
+                         },
+                         success:function (res) {
+                             $('#wenzhang').css('display', 'none');
+                             $('#yonghu').css('display', 'block');
+
+
+
+
+                         }
+                     })
+            });
+            $("#hu").click(function(){
+                    console.log('ok')
+            });
+            $("#zt").click(function(){
+                    alert('oko')
+            });
+        </script>
+        <script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js"></script>
+     {% endblock %}
+{% endblock %}
